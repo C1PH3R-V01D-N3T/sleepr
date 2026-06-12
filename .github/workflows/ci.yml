@@ -32,10 +32,10 @@ jobs:
 
       - name: Verify binary
         run: |
-          test -x meu-comando
+          test -x sleepr
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: meu-comando-${{ matrix.compiler }}
-          path: meu-comando
+          name: sleepr-${{ matrix.compiler }}
+          path: sleepr
