@@ -27,13 +27,13 @@ jobs:
       - name: Create tarball
         run: |
           mkdir release
-          cp meu-comando release/
+          cp sleepr release/
           cp README.md release/ || true
 
-          tar -czf meu-comando-linux-x86_64.tar.gz release/
+          tar -czf sleepr-linux-x86_64.tar.gz release/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            meu-comando-linux-x86_64.tar.gz
+            sleepr-linux-x86_64.tar.gz
