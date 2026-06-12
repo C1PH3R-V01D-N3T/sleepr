@@ -1,22 +1,35 @@
-# Nome do comando
-APP_NAME := meu-comando
+APP      := sleepr
 
-# Diretórios
-PREFIX ?= /usr/local
-BINDIR := $(PREFIX)/bin
+CC       ?= gcc
+
+PREFIX   ?= /usr/local
+BINDIR   := $(PREFIX)/bin
+
+CFLAGS   := -O2 -Wall -Wextra -Wpedantic -std=c17
+LDFLAGS  :=
+
+SRC      := $(wildcard src/*.c)
+OBJ      := $(SRC:.c=.o)
+DEP      := $(OBJ:.o=.d)
 
 .PHONY: all install uninstall clean
 
-all:
-	@echo "Nada para compilar."
+all: $(APP)
 
-install:
-	@echo "Instalando $(APP_NAME)..."
-	install -Dm755 src/$(APP_NAME) $(DESTDIR)$(BINDIR)/$(APP_NAME)
+$(APP): $(OBJ)
+	$(CC) $(OBJ) -o $@ $(LDFLAGS)
+
+src/%.o: src/%.c
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+
+install: $(APP)
+	install -Dm755 $(APP) \
+		$(DESTDIR)$(BINDIR)/$(APP)
 
 uninstall:
-	@echo "Removendo $(APP_NAME)..."
-	rm -f $(DESTDIR)$(BINDIR)/$(APP_NAME)
+	rm -f $(DESTDIR)$(BINDIR)/$(APP)
 
 clean:
-	@echo "Nada para limpar."
+	rm -f $(APP) $(OBJ) $(DEP)
+
+-include $(DEP)
