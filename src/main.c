@@ -3,23 +3,9 @@
 #include <unistd.h>
 
 int main(void) {
-    FILE *f = fopen("src/banner.txt", "r");
-    int c;
-
-    if (!f) {
-        perror("Erro ao abrir banner");
-        return 1;
-    }
-
-    while ((c = fgetc(f)) != EOF) {
-        putchar(c);
-    }
-
-    fclose(f);
-
     int secs;
 
-    printf("\n\nEnter the time in seconds: ");
+    printf("Enter the time in seconds: ");
 
     if (scanf("%d", &secs) != 1 || secs <= 0) {
         printf("Invalid time.\n");
